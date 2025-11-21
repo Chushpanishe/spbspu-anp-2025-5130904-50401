@@ -58,7 +58,7 @@ char *getLine(std::istream &in, size_t &size) {
 
   return buffer;
 }
-char *lat_rmv(char *original, char *destination, size_t & s) {
+char *lat_rmv(const char * const original, char *destination, size_t & s) {
     if (!original || !destination) {
         return NULL;
     }
@@ -79,11 +79,28 @@ char *lat_rmv(char *original, char *destination, size_t & s) {
     destination[w] = '\0';
     return destination;
 }
+int has_rep(const char *s) {
+    int visited[256] = {0};
+
+    for (int i = 0; s[i] != '\0'; i++) {
+        unsigned char c = s[i];
+        if (visited[c] == 1) {
+            return 1;
+        }
+        visited[c] = 1; 
+    }
+
+    return 0; 
+}
 
 } // namespace levkin
 
 int main() {
   size_t s = 0;
-  levkin::getLine(std::cin, s);
+  const char * string = levkin::getLine(std::cin, s);
+  std::cout << "has rep: " <<levkin::has_rep(string) << "\n";
+  
+  char * cleaned_string = new char[s];
+  std::cout << "removed eng lett: " <<levkin::lat_rmv(string,cleaned_string, s) << "\n";
   return 0;
 }
