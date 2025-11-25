@@ -48,6 +48,7 @@ char* donkeev::getline(std::istream& input, size_t* size)
       char* newData = reinterpret_cast< char* > (malloc(sizeof(char) * extendedSize));
       if (newData == nullptr)
       {
+        free(data);
         return nullptr;
       }
       for (size_t i = 0; i < extendedSize - 5; ++i)
@@ -140,9 +141,12 @@ int main()
   char* lowLetterArray = reinterpret_cast< char* > (malloc(sizeof(char) * size));
   if (lowLetterArray == nullptr)
   {
+    free(array);
     std::cerr << "Memory error\n";
     return 1;
   }
   lowLetterArray = donkeev::changeRegister(array, lowLetterArray, size);
   std::cout << lowLetterArray << '\n';
+  free(array);
+  free(lowLetterArray);
 }
