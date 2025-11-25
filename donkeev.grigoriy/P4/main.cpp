@@ -35,6 +35,11 @@ char* donkeev::getline(std::istream& input, size_t* size)
   }
   size_t readen = 0;
   input >> data[0];
+  if (data[0] == '\n')
+  {
+    free(data);
+    return nullptr;
+  }
   while (data[readen] != '\n')
   {
     if (readen == extendedSize - 1)
@@ -125,6 +130,7 @@ int main()
   char* buffer = reinterpret_cast< char* > (malloc(sizeof(char) * size));
   if (buffer == nullptr)
   {
+    free(array);
     std::cerr << "Memory error\n";
     return 1;
   }
