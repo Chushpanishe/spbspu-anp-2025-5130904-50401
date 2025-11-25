@@ -246,7 +246,7 @@ int main(int argc, char** argv)
     output << rows << ' ' << cols << ' ' << "false";
     return 0;
   }
-  int tempMatrix1[rows * cols] = {};
+  int tempMatrix1[10000] = {};
   int* tempMatrix2 = nullptr;
   if (argv[1][0] == '2')
   {
@@ -274,10 +274,8 @@ int main(int argc, char** argv)
     delete [] tempMatrix2;
     return 2;
   }
-  int matrix2[rows * cols] = {};
-  donkeev::copyMtx(matrix, rows, cols, matrix2);
+  bool lwrTriMtx = donkeev::isMatrixTriangular(matrix, rows, cols);
   donkeev::reducingMatrixSpirally(matrix, rows, cols);
-  bool lwrTriMtx = donkeev::isMatrixTriangular(matrix2, rows, cols);
   donkeev::outputToFile(output, matrix, rows, cols, lwrTriMtx);
   if (argv[1][0] == '2')
   {
