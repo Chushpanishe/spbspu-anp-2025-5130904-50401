@@ -13,6 +13,7 @@ namespace donkeev
   int* cutMatrix(int* matrix, size_t rows, size_t cols);
   bool isMatrixTriangular(int* matrix, size_t& rows, size_t& cols);
 }
+
 size_t donkeev::inputProcessing(int argcCheck, char** argvCheck)
   {
     if (argcCheck > 4)
