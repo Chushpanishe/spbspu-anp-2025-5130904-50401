@@ -234,7 +234,7 @@ int main(int argc, char** argv)
     {
       tempMatrix2 = new int [rows * cols];
     }
-    catch(const std::bad_alloc& e)
+    catch (const std::bad_alloc& e)
     {
       std::cerr << e.what() << '\n';
       return 2;
