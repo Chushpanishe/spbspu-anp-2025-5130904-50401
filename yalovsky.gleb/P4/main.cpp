@@ -102,21 +102,20 @@ namespace yalovsky
             char currentChar = source[i];
             bool isVowel = false;
 
-
             if (std::isalpha(static_cast< unsigned char >(currentChar)))
             {
                 char lowerChar = std::tolower(static_cast< unsigned char >(currentChar));
                 switch (lowerChar)
                 {
-                    case 'a':
-                    case 'e':
-                    case 'i':
-                    case 'o':
-                    case 'u':
-                        isVowel = true;
-                        break;
-                    default:
-                        break;
+                case 'a':
+                case 'e':
+                case 'i':
+                case 'o':
+                case 'u':
+                    isVowel = true;
+                    break;
+                default:
+                    break;
                 }
             }
 
