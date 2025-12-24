@@ -40,7 +40,7 @@ char* donkeev::getline(std::istream& input, size_t* size)
     free(data);
     return nullptr;
   }
-  while (data[readen] != '\n')
+  while (!input.eof())
   {
     if (readen == extendedSize - 1)
     {
