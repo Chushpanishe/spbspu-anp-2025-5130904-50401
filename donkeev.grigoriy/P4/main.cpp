@@ -4,19 +4,18 @@
 
 namespace donkeev
 {
-  char* reduceSize(char* oldData, const size_t realSize);
+  char* reduceSize(char* oldData, const size_t& realSize);
   char* getline(std::istream& input, size_t* size);
   size_t differenceLetters(const char* const array, char* buffer, const size_t sizeOfBuffer);
   char* changeRegister(const char* const array, char* changedArray, const size_t size);
 }
-char* donkeev::reduceSize(char* oldData, const size_t realSize)
+char* donkeev::reduceSize(char* oldData, const size_t& realSize)
 {
   char* temp = reinterpret_cast< char* > (malloc(sizeof(char) * realSize));
   for (size_t i = 0; i < realSize; ++i)
   {
     temp[i] = oldData[i];
   }
-  temp[realSize - 1] = '\0';
   free(oldData);
   return temp;
 }
@@ -34,14 +33,12 @@ char* donkeev::getline(std::istream& input, size_t* size)
     return data;
   }
   size_t readen = 0;
-  input >> data[0];
-  if (data[0] == '\n')
+  char ch;
+  input >> ch;
+  while (input)
   {
-    free(data);
-    return nullptr;
-  }
-  while (!input.eof())
-  {
+    data[readen] = ch;
+    ++readen;
     if (readen == extendedSize - 1)
     {
       extendedSize += 5;
@@ -51,15 +48,14 @@ char* donkeev::getline(std::istream& input, size_t* size)
         free(data);
         return nullptr;
       }
-      for (size_t i = 0; i < extendedSize - 5; ++i)
+      for (size_t i = 0; i < readen; ++i)
       {
         newData[i] = data[i];
       }
       free(data);
       data = newData;
     }
-    ++readen;
-    input >> data[readen];
+    input >> ch;
   }
   data[readen] = '\0';
   if(isSkipws)
@@ -67,12 +63,16 @@ char* donkeev::getline(std::istream& input, size_t* size)
     input >> std::skipws;
   }
   *size = readen + 1;
-  return data;
+  if (*size == extendedSize)
+  {
+    return data;
+  }
+  char* reducedData = reduceSize(data, *size);
+  return reducedData;
 }
 size_t donkeev::differenceLetters(const char* const array, char* buffer, const size_t sizeOfBuffer)
 {
   size_t id = 0;
-  size_t j = 0;
   if (sizeOfBuffer == 1)
   {
     return 0;
@@ -81,21 +81,27 @@ size_t donkeev::differenceLetters(const char* const array, char* buffer, const s
   {
     if (std::isalpha(array[i]))
     {
-      buffer[id] = array[i];
+      if (std::isupper(array[i]))
+      {
+        buffer[id] = std::tolower(array[i]);
+      }
+      else
+      {
+        buffer[id] = array[i];
+      }
       char current = buffer[id];
       ++id;
-      for (; j < sizeOfBuffer; ++j)
+      for (size_t j = 0; j < id - 1; ++j)
       {
         if (current == buffer[j])
         {
           buffer[id - 1] = '0';
           --id;
-          j = sizeOfBuffer;
         }
       }
     }
   }
-  return id + 1;
+  return id;
 }
 char* donkeev::changeRegister(const char* const array, char* changedArray, const size_t size)
 {
@@ -128,6 +134,7 @@ int main()
     std::cerr << "Memory error\n";
     return 1;
   }
+  std::cout << '\n' << size << '\n';
   char* buffer = reinterpret_cast< char* > (malloc(sizeof(char) * size));
   if (buffer == nullptr)
   {
