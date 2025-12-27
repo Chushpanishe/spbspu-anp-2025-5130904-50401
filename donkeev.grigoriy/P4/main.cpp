@@ -35,6 +35,10 @@ char* donkeev::getline(std::istream& input, size_t* size)
   size_t readen = 0;
   char ch;
   input >> ch;
+  if (!input)
+  {
+    throw std::logic_error("empty input");
+  }
   while (input)
   {
     data[readen] = ch;
@@ -128,7 +132,16 @@ char* donkeev::changeRegister(const char* const array, char* changedArray, const
 int main()
 {
   size_t size = 0;
-  char* array = donkeev::getline(std::cin, &size);
+  char* array = nullptr;
+  try
+  {
+    array = donkeev::getline(std::cin, &size);
+  }
+  catch(std::logic_error& e)
+  {
+    std::cerr << e.what() << '\n';
+    return 1;
+  }
   if (array == nullptr)
   {
     std::cerr << "Memory error\n";
