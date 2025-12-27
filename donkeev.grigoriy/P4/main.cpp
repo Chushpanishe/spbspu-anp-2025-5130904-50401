@@ -37,6 +37,7 @@ char* donkeev::getline(std::istream& input, size_t* size)
   input >> ch;
   if (!input)
   {
+    free(data);
     throw std::logic_error("empty input");
   }
   while (input)
