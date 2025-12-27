@@ -134,7 +134,6 @@ int main()
     std::cerr << "Memory error\n";
     return 1;
   }
-  std::cout << '\n' << size << '\n';
   char* buffer = reinterpret_cast< char* > (malloc(sizeof(char) * size));
   if (buffer == nullptr)
   {
@@ -144,7 +143,7 @@ int main()
   }
   size_t diflat = donkeev::differenceLetters(array, buffer, size);
   free(buffer);
-  std::cout << diflat << '\n';
+  std::cout << '\n' << diflat << '\n';
   char* lowLetterArray = reinterpret_cast< char* > (malloc(sizeof(char) * size));
   if (lowLetterArray == nullptr)
   {
