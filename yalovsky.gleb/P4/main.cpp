@@ -45,8 +45,24 @@ namespace yalovsky
             input >> std::noskipws;
         }
 
-        while (input.get(currentChar) && currentChar != '\n')
+
+        if (!input.get(currentChar))
         {
+            delete[] buffer;
+            if (wasSkipws)
+            {
+                input >> std::skipws;
+            }
+            return nullptr;
+        }
+
+        do
+        {
+            if (currentChar == '\n')
+            {
+                break;
+            }
+
             if (length + 1 >= capacity)
             {
                 size_t newCapacity = capacity * 2;
@@ -54,6 +70,10 @@ namespace yalovsky
                 if (!newBuffer)
                 {
                     delete[] buffer;
+                    if (wasSkipws)
+                    {
+                        input >> std::skipws;
+                    }
                     return nullptr;
                 }
 
@@ -69,7 +89,7 @@ namespace yalovsky
 
             buffer[length] = currentChar;
             ++length;
-        }
+        } while (input.get(currentChar));
 
         buffer[length] = '\0';
 
@@ -101,9 +121,9 @@ namespace yalovsky
             char currentChar = source[i];
             bool isVowel = false;
 
-            if (std::isalpha(static_cast<unsigned char>(currentChar)))
+            if (std::isalpha(static_cast< unsigned char >(currentChar)))
             {
-                char lowerChar = std::tolower(static_cast<unsigned char>(currentChar));
+                char lowerChar = std::tolower(static_cast< unsigned char >(currentChar));
                 switch (lowerChar)
                 {
                 case 'a':
