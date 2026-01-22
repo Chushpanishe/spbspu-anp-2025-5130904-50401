@@ -113,7 +113,7 @@ int main()
         return 1;
     }
 
-    std::cout << "has rep: " << levkin::has_rep(str) << "\n";
+    std::cout << "Has repeated: " << levkin::has_rep(str) << "\n";
 
     char* cleaned = static_cast<char*>(malloc(len + 1));
     if (!cleaned) {
@@ -124,7 +124,7 @@ int main()
 
     size_t cleaned_len = 0;
     levkin::lat_rmv(str, cleaned, cleaned_len);
-    std::cout << "removed eng lett: " << cleaned << "\n";
+    std::cout << "Removed English letter:: " << cleaned << "\n";
 
     free(cleaned);
     free(str);
