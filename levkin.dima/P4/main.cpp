@@ -6,8 +6,8 @@
 namespace levkin {
   char* extend(char* old_buffer, size_t old_size, size_t new_size);
   char* getLine(std::istream& in, size_t& size);
-  int has_rep(const char* s);
-  char* lat_rmv(const char* original, char* destination, size_t& s);
+  int hasRep(const char* s);
+  char* latRmv(const char* original, char* destination, size_t& s);
 }
 
 int main()
@@ -21,7 +21,7 @@ int main()
         return 1;
     }
 
-    std::cout << "Has repeated: " << levkin::has_rep(str) << "\n";
+    std::cout << "Has repeated: " << levkin::hasRep(str) << "\n";
 
     char* cleaned = static_cast< char* >(malloc(len + 1));
     if (!cleaned)
@@ -32,7 +32,7 @@ int main()
     }
 
     size_t cleaned_len = 0;
-    levkin::lat_rmv(str, cleaned, cleaned_len);
+    levkin::latRmv(str, cleaned, cleaned_len);
     std::cout << "Removed English letter:: " << cleaned << "\n";
 
     free(cleaned);
@@ -130,7 +130,7 @@ char* levkin::getLine(std::istream& in, size_t& size)
     return buffer;
 }
 
-int levkin::has_rep(const char* s)
+int levkin::hasRep(const char* s)
 {
     unsigned char visited[256] = {0};
 
@@ -153,7 +153,7 @@ int levkin::has_rep(const char* s)
     return 0;
 }
 
-char* levkin::lat_rmv(const char* original, char* destination, size_t& s)
+char* levkin::latRmv(const char* original, char* destination, size_t& s)
 {
     if (!original || !destination)
     {
