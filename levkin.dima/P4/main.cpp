@@ -91,8 +91,9 @@ char* levkin::getLine(std::istream& in, size_t& size)
 
   if (size == 0) {
     free(buffer);
-    if (is_skip_ws)
+    if (is_skip_ws) {
       in >> std::skipws;
+    }
     return nullptr;
   }
 
