@@ -7,9 +7,9 @@ namespace donkeev
   void outputToFile(std::ostream& output, const int* matrix, size_t rows, size_t cols, bool answer);
   size_t readingMatrix(std::istream& input, int* matrix, size_t rows, size_t cols);
   bool isFinish(size_t lim_u, size_t lim_r, size_t lim_d, size_t lim_l);
-  void reducingMatrixSpirally(int* new_matrix, const size_t rows, const size_t cols);
-  void copyMtx(const int* matrix, size_t rows, size_t cols, int* const matrix2);
-  int* cutMatrix(int* matrix, size_t rows, size_t cols);
+  void reducingMatrixSpirally(int* new_matrix, size_t rows, size_t cols);
+  void copyMtx(const int* matrix, size_t rows, size_t cols, int* matrix2);
+  int* cutMatrix(const int* matrix, size_t rows, size_t cols);
   bool isMatrixTriangular(int* matrix, size_t& rows, size_t& cols);
 }
 
@@ -50,7 +50,7 @@ bool donkeev::isFinish(const size_t lim_u, const size_t lim_r, const size_t lim_
   temp = temp && lim_u == lim_l;
   return temp;
 }
-void donkeev::reducingMatrixSpirally(int* new_matrix, const size_t rows, const size_t cols)
+void donkeev::reducingMatrixSpirally(int* const new_matrix, const size_t rows, const size_t cols) //добавил const
 {
   size_t lastVisitedUp = 0;
   size_t lastVisitedDown = rows + 1;
@@ -122,7 +122,7 @@ void donkeev::copyMtx(const int* matrix, const size_t rows, const size_t cols, i
     matrix2[i] = matrix [i];
   }
 }
-int* donkeev::cutMatrix(int* matrix, size_t rows, size_t cols)
+int* donkeev::cutMatrix(const int* matrix, size_t rows, size_t cols)
 {
   size_t minimum = rows < cols ? rows : cols;
   rows = minimum;
