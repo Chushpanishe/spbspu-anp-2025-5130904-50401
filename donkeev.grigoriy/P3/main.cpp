@@ -129,12 +129,12 @@ int* donkeev::cutMatrix(const int* matrix, size_t rows, size_t cols)
   cols = minimum;
   int* cuttedMatrix = new int [minimum * minimum];
   for (size_t i = 0; i < minimum; ++i)
+  {
+    for (size_t j = 0; j < minimum; ++j)
     {
-      for (size_t j = 0; j < minimum; ++j)
-      {
-        cuttedMatrix[i * minimum + j] = matrix[i * cols + j];
-      }
+      cuttedMatrix[i * minimum + j] = matrix[i * cols + j];
     }
+  }
   return cuttedMatrix;
 }
 bool donkeev::isMatrixTriangular(int* matrix, size_t& rows, size_t& cols)
