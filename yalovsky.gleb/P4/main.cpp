@@ -88,7 +88,8 @@ namespace yalovsky
 
       buffer[length] = currentChar;
       ++length;
-    } while (input.get(currentChar));
+    }
+    while (input.get(currentChar));
 
     buffer[length] = '\0';
 
