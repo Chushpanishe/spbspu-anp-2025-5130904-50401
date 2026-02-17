@@ -4,12 +4,12 @@
 namespace donkeev
 {
   std::istream& reading(std::istream& input, int& target);
-  void outputToFile(std::ostream& output, int* matrix, const size_t rows, const size_t cols, bool answer);
-  size_t readingMatrix(std::istream& input, int* matrix, const size_t rows, const size_t cols);
+  void outputToFile(std::ostream& output, const int* matrix, size_t rows, size_t cols, bool answer);
+  size_t readingMatrix(std::istream& input, int* matrix, size_t rows, size_t cols);
   bool isFinish(size_t lim_u, size_t lim_r, size_t lim_d, size_t lim_l);
-  void reducingMatrixSpirally(int* new_matrix, const size_t& rows, const size_t& cols);
-  void copyMtx(int* matrix, size_t rows, size_t cols, int* matrix2);
-  int* cutMatrix(int* matrix, size_t rows, size_t cols);
+  void reducingMatrixSpirally(int* new_matrix, size_t rows, size_t cols);
+  void copyMtx(const int* matrix, size_t rows, size_t cols, int* matrix2);
+  int* cutMatrix(const int* matrix, size_t rows, size_t cols);
   bool isMatrixTriangular(int* matrix, size_t& rows, size_t& cols);
 }
 
@@ -17,20 +17,13 @@ std::istream& donkeev::reading(std::istream& input, int& target)
 {
   return input >> target;
 }
-void donkeev::outputToFile(std::ostream& output, int* matrix, const size_t rows, const size_t cols, bool answer)
+void donkeev::outputToFile(std::ostream& output, const int* matrix, const size_t rows, const size_t cols, const bool answer)
 {
   for (size_t i = 0; i < rows * cols; ++i)
   {
     output << matrix[i] << ' ';
   }
-  if (answer == 1)
-  {
-    output << "true";
-  }
-  else
-  {
-    output << "false";
-  }
+  output << std::boolalpha << answer;
 }
 size_t donkeev::readingMatrix(std::istream& input, int* matrix, const size_t rows, const size_t cols)
 {
@@ -50,14 +43,14 @@ size_t donkeev::readingMatrix(std::istream& input, int* matrix, const size_t row
   }
   return 0;
 }
-bool donkeev::isFinish(size_t lim_u, size_t lim_r, size_t lim_d, size_t lim_l)
+bool donkeev::isFinish(const size_t lim_u, const size_t lim_r, const size_t lim_d, const size_t lim_l)
 {
   bool temp = lim_u == lim_r;
   temp = temp && lim_u == lim_d;
   temp = temp && lim_u == lim_l;
   return temp;
 }
-void donkeev::reducingMatrixSpirally(int* new_matrix, const size_t& rows, const size_t& cols)
+void donkeev::reducingMatrixSpirally(int* const new_matrix, const size_t rows, const size_t cols) //добавил const
 {
   size_t lastVisitedUp = 0;
   size_t lastVisitedDown = rows + 1;
@@ -122,26 +115,26 @@ void donkeev::reducingMatrixSpirally(int* new_matrix, const size_t& rows, const 
     }
   }
 }
-void donkeev::copyMtx(int* matrix, size_t rows, size_t cols, int* matrix2)
+void donkeev::copyMtx(const int* matrix, const size_t rows, const size_t cols, int* const matrix2)
 {
   for (size_t i = 0; i < rows * cols; ++i)
   {
     matrix2[i] = matrix [i];
   }
 }
-int* donkeev::cutMatrix(int* matrix, size_t rows, size_t cols)
+int* donkeev::cutMatrix(const int* matrix, size_t rows, size_t cols)
 {
   size_t minimum = rows < cols ? rows : cols;
   rows = minimum;
   cols = minimum;
   int* cuttedMatrix = new int [minimum * minimum];
   for (size_t i = 0; i < minimum; ++i)
+  {
+    for (size_t j = 0; j < minimum; ++j)
     {
-      for (size_t j = 0; j < minimum; ++j)
-      {
-        cuttedMatrix[i * minimum + j] = matrix[i * cols + j];
-      }
+      cuttedMatrix[i * minimum + j] = matrix[i * cols + j];
     }
+  }
   return cuttedMatrix;
 }
 bool donkeev::isMatrixTriangular(int* matrix, size_t& rows, size_t& cols)
